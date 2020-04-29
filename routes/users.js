@@ -10,33 +10,39 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
-    res.send("respond with a resource of get");
+	res.send("respond with a resource of get");
 });
 
 router.post("/", function (req, res, next) {
-    res.send("respond with a resource of post");
+	res.send("respond with a resource of post");
 });
 
 router.get("/getUserByName", function (req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	var obj = { name: "tyk", age: 24 };
+	res.send(JSON.stringify(obj));
+});
+
+router.get("/axiostest", function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    var obj = {name:'tyk',age:24}
-    res.send(JSON.stringify(obj));
+    let num = 23
+	res.send(num);
 });
 
 router.get("/getUser1", function (req, res, next) {
-    res.send("respond with a resource of get1");
+	res.send("respond with a resource of get1");
 });
 router.get("/getUser2", function (req, res, next) {
-    res.send("respond with a resource of get2");
+	res.send("respond with a resource of get2");
 });
 router.get("/getUser3", function (req, res, next) {
-    res.send("respond with a resource of get3");
+	res.send("respond with a resource of get3");
 });
 router.get("/getUser4", function (req, res, next) {
-    res.send("respond with a resource of get4");
+	res.send("respond with a resource of get4");
 });
 router.get("/getUser5", function (req, res, next) {
-    res.send("respond with a resource of get5");
+	res.send("respond with a resource of get5");
 });
 
 module.exports = router;
