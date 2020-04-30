@@ -11,7 +11,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
-const cors = require('cors');
+const cors = require("cors");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -29,18 +29,22 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
+app.use(function (req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	console.log(new Date().getTime());
+    next();
+});
+
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
+app.use(function (err, req, res, next) {
+	console.error(err.stack);
+	res.status(500).send("Something broke!");
+});
 
 
-// catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     next(createError(404));
-// });
-
-// // error handler
+// error handler
 // app.use(function(err, req, res, next) {
 //     // set locals, only providing error in development
 //     res.locals.message = err.message;
@@ -51,18 +55,5 @@ app.use("/users", usersRouter);
 //     res.render("error");
 // });
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    next();
-});
-
-// var allowCrossDomain = function(req, res, next) {
-//     res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
-//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-//     // res.header('Access-Control-Allow-Headers', 'Content-Type');
-//     res.header('Access-Control-Allow-Credentials','true');
-//     next();
-// };
-// app.use(allowCrossDomain);
 
 module.exports = app;
